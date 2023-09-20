@@ -1,8 +1,8 @@
 import { prisma } from "@/db";
 
-export async function createUser(cpf: string, email: string, password: string, name?: string) {
+export async function createUserModel(cpf: string, email: string, password: string, name?: string) {
     
-    const user = prisma.user.create({
+    const user = await prisma.user.create({
         data: {
             name: name,
             cpf: cpf,
@@ -11,5 +11,25 @@ export async function createUser(cpf: string, email: string, password: string, n
         }
     });
 
+    return user;
+}
+
+export async function findUserByCpfModel(cpf: string) {
+    const user = await prisma.user.findUnique({
+        where: {
+            cpf: cpf
+        }
+    })
+    
+    return user;
+}
+
+export async function findUserByEmailModel(email: string) {
+    const user = await prisma.user.findUnique({
+        where: {
+            email: email
+        }
+    })
+    
     return user;
 }
