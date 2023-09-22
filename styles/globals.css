@@ -25,3 +25,7 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+.margin-submit-register{
+  margin-top: 20px;
+}

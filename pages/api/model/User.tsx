@@ -33,3 +33,8 @@ export async function findUserByEmailModel(email: string) {
     
     return user;
 }
+
+export async function findAllUsers() {
+    const users = await prisma.user.findMany();
+    return users;
+}
