@@ -16,3 +16,12 @@ export async function createUser(cpf: string, email: string, password: string, n
     return response;
     
 }
+
+export async function login(email:string, password: string) {
+    const userLogin = await userModel.findUserByLoginModel(email, password);
+
+    if (userLogin == undefined) {
+        return {message: "Incorrect Email or Password"};
+    }
+    
+}

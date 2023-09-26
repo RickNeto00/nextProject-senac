@@ -2,7 +2,7 @@
 import * as check from "./check";
 
 export default function userRequest(cpf: any, email: any, password: any, name: any){
-    if (!check.checkMinAndMaxLength(cpf, 11, 14)) {
+    if (!check.checkMinAndMaxLength(cpf, 14, 14)) {
         return {status: false, message: "Invalid CPF."};
     }
 
@@ -18,7 +18,7 @@ export default function userRequest(cpf: any, email: any, password: any, name: a
         return {status: false, message: "Invalid Password."};
     }
 
-    if (!check.checkMinAndMaxLength(name, 3, 32) && name != undefined) {
+    if (!check.checkMinAndMaxLength(name, 3, 32) && name != undefined && name != '') {
         return {status: false, message: "Invalid Name"};
     }
 

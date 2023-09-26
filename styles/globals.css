@@ -21,11 +21,26 @@ body {
   background: linear-gradient(
       to bottom,
       transparent,
-      rgb(var(--background-end-rgb))
+      rgb(var(--background-end-rgb))  
     )
     rgb(var(--background-start-rgb));
 }
 
 .margin-submit-register{
   margin-top: 20px;
+}
+
+.register-error{
+  color: white;
+  font-size: 1.5em;
+  text-align: center;
+  background-color: rgb(255, 87, 87);
+  border-radius: 10px;
+}
+
+.login-form-card{
+  padding: 25px;
+  border: 10px solid black;
+  border-radius: 15px;
+  background-color: rgb(180, 180, 180);
 }

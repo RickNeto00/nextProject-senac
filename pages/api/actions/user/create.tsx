@@ -19,6 +19,10 @@ export default async(req: NextApiRequest, res: NextApiResponse) => {
     // Create model
     const user = await createUser(cpf, email, password, name);
 
+    if (user.message != undefined) {
+        return res.status(403).json(user);
+    }
+
     return res.status(200).json(user);
     
 }

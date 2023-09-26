@@ -1,7 +1,14 @@
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 export default function registerPage(){
+
+    const [error, setError] = useState('');
+    //constante para navagação de paginas
+    const router = useRouter();
+
+    //formulario a ser enviado na requisicao
     const [formData, setFormData] = useState({
         name: '',
         cpf: '',
@@ -10,6 +17,7 @@ export default function registerPage(){
         repeatPassword: ''
     });
 
+    //preencher o formulario com o conteudo dos inputs
     function handleFormEdit(event: any, name: any) {
         setFormData({
             ...formData,
@@ -17,20 +25,35 @@ export default function registerPage(){
         })
     }
 
+    //funcao para enviar a requsicao ao servidor
     async function formSubmit(event: any) {
-        event.preventDefault();
+        try {
+            event.preventDefault();
 
-        const response = await fetch(`/api/actions/user/create`, {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json',
-            },
-            body: JSON.stringify(formData)
-        })
+            const response = await fetch(`/api/actions/user/create`, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            })
 
-        const responseJson = await response.json();
-        console.log(responseJson);
-        console.log(response.status);
+            const responseJson = await response.json();
+            console.log(responseJson);
+            console.log(response.status);
+
+            if (response.status != 200) {
+                throw new Error(responseJson.message);
+            }
+
+            alert("Account Created.");
+
+            router.push(`/user/login`);
+
+        } catch (err:any) {
+            console.log(err);
+            setError(err.message);
+        }
     }
 
     return (
@@ -39,6 +62,7 @@ export default function registerPage(){
                 <title>Register</title>
             </Head>
             <form className="grid" action="" onSubmit={formSubmit}>
+                {error && <p className="register-error">{"Error: " + error}</p>}
                 <div>
                     <label htmlFor="name">Name</label>
                     <input type="text" id="name" value={formData.name} onChange={(e) => {handleFormEdit(e, 'name')}} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Henrique Ferreira Neto"/>
@@ -49,7 +73,7 @@ export default function registerPage(){
                 </div>
                 <div>
                     <label htmlFor="email">Email</label>
-                    <input type="text" id="email" value={formData.email} onChange={(e) => {handleFormEdit(e, 'email')}} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="henrique@gmail.com" required/>
+                    <input type="email" id="email" value={formData.email} onChange={(e) => {handleFormEdit(e, 'email')}} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="henrique@gmail.com" required/>
                 </div>
                 <div>    
                     <label htmlFor="password">Password</label>

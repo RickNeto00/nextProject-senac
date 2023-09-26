@@ -34,6 +34,17 @@ export async function findUserByEmailModel(email: string) {
     return user;
 }
 
+export async function findUserByLoginModel(email: string, password: string) {
+    const user = await prisma.user.findUnique({
+        where: {
+            email: email,
+            password: password
+        }
+    })
+    
+    return user;
+}
+
 export async function findAllUsers() {
     const users = await prisma.user.findMany();
     return users;
