@@ -40,7 +40,15 @@ body {
 
 .login-form-card{
   padding: 25px;
-  border: 10px solid black;
+  border: 5px solid black;
   border-radius: 15px;
   background-color: rgb(180, 180, 180);
+}
+
+.link-login-register{
+  margin-top: 1.5em;
+}
+
+.link-login-register:hover{
+  color: blue;
 }

@@ -1,4 +1,5 @@
-import { setCookie } from "cookies-next";
+import { checkToken } from "@/services/tokenConfig";
+import { getCookie, setCookie } from "cookies-next";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -48,7 +49,7 @@ export default function loginPage() {
     }
 
     return (
-        <main className={`flex min-h-screen flex-col items-center justify-between p-24`}>
+        <main className={`flex min-h-screen flex-col items-center p-24`}>
             <Head>
                 <title>Login</title>
             </Head>
@@ -63,7 +64,32 @@ export default function loginPage() {
                 </div>
                 <button type="submit" className="margin-submit-register text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login</button>
             </form>
-            <Link href={`/user/register`}>Create Account</Link>
+            <Link className="link-login-register" href={`/user/register`}>Create Account</Link>
         </main>
     )
 }
+
+export function getServerSideProps({req, res}: any) {
+    try {
+        const token = getCookie('authorization', {req, res});
+      
+        if (!token) {
+            throw new Error('Invalid Token');
+        }
+  
+        checkToken(token);
+  
+        return {
+            redirect: {
+                permanent: false,
+                destination: `/`
+            },
+            props: {}
+        };
+  
+    } catch (error) {
+      return {
+        props: {}
+      };
+    }
+  }
