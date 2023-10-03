@@ -1,0 +1,12 @@
+.logout {
+    background-color: darkblue;
+    border-radius: 5px;
+    height: 30px;
+    width: 90px;
+    color: white;
+}
+
+.navBar {
+    display: flex;
+    background-color: cadetblue;
+}

@@ -17,3 +17,9 @@ model User {
   email String @unique
   password String
 }
+
+model Movie {
+  id Int @id @unique @default(autoincrement())
+  name String @unique
+  releaseDate String
+}

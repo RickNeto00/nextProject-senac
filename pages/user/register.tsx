@@ -26,7 +26,7 @@ export default function registerPage(){
         })
     }
 
-    //funcao para enviar a requsicao ao servidor
+    //funcao para enviar a requisicao ao servidor
     async function formSubmit(event: any) {
         try {
             event.preventDefault();
